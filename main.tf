@@ -27,3 +27,4 @@ resource "azurerm_virtual_network" "vns" {
     }
   }
 }
+
