@@ -9,12 +9,12 @@ terraform {
       version = "3.7.2"
     }
   }
-     backend "azurerm" {
-     resource_group_name  = "rg-001"
-     storage_account_name = "test8307532971"
-     container_name       = "developement"
-     key                  = "main.terraform.tfstate"
-    }
+    # backend "azurerm" {
+    # resource_group_name  = "rg-001"
+    # storage_account_name = "test8307532971"
+    # container_name       = "developement"
+    # key                  = "main.terraform.tfstate"
+    # }
 }
 
 provider "azurerm" {
