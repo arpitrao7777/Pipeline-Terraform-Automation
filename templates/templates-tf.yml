@@ -1,0 +1,66 @@
+parameters:
+- name: environment
+
+stages:
+  - stage: terraforminitandplan
+    displayName: Terraform init and Plan
+    jobs:
+      - job: terraforminitandplan
+        displayName: Terraform init and Plan
+        steps:        
+        - task: TerraformTask@5
+          displayName: Terraform Init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'testingpool'
+            backendAzureRmResourceGroupName: 'rg-001'
+            backendAzureRmStorageAccountName: 'test32971'
+            backendAzureRmContainerName: 'developement'
+            backendAzureRmKey: '${{ parameters.environment }}.terraform.tfstate'
+
+        - task: TerraformTask@5
+          displayName: Terraform Plan
+          inputs:
+            provider: 'azurerm'
+            command: 'plan'
+            commandOptions: '--var-file=${{ parameters.environment }}.terraform.tfvars'
+            environmentServiceNameAzureRM: 'testingpool'
+
+  - stage: manualvalidationandterraformapply
+    dependsOn: terraforminitandplan
+    condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
+    displayName: Manual Validation And Terraform Apply
+    jobs:
+      - job: manualvalidation
+        pool: server
+        displayName: Manual Validation
+        steps: 
+        - task: ManualValidation@1
+          displayName: Manual Validation
+          inputs:
+            notifyUsers: 'arpit39115@gmail.com'
+            instructions: 'Please Review it'
+
+      - job: terraformapply
+        dependsOn: manualvalidation
+        displayName: Terraform Apply
+        steps:
+        - task: TerraformTask@5
+          displayName: Terraform Init
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'testingpool'
+            backendAzureRmResourceGroupName: 'rg-001'
+            backendAzureRmStorageAccountName: 'test32971'
+            backendAzureRmContainerName: 'developement'
+            backendAzureRmKey: '${{ parameters.environment }}.terraform.tfstate'
+
+        - task: TerraformTask@5
+          displayName: Terraform Apply
+          inputs:
+            provider: 'azurerm'
+            command: 'apply'
+            commandOptions: '--var-file=${{ parameters.environment }}.terraform.tfvars'
+            environmentServiceNameAzureRM: 'testingpool'

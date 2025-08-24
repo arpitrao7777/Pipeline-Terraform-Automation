@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rgs" {
 }
 
 resource "azurerm_storage_account" "stgs" {
-  name                     = "test8307532971"
+  name                     = "test32972"
   location                 = azurerm_resource_group.rgs.location
   resource_group_name      = azurerm_resource_group.rgs.name
   account_replication_type = "LRS"

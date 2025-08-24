@@ -1,11 +1,11 @@
-rg_name  = "rg-001"
+rg_name  = "rg-002"
 location = "centralindia"
 
 vns = {
   virtualnetwork1 = {
     name                = "vnet-1"
     location            = "centralindia"
-    resource_group_name = "rg-001"
+    resource_group_name = "rg-002"
     address_space       = ["10.0.0.0/16"]
     subnets = {
       snet1 = {
@@ -21,7 +21,7 @@ vns = {
   virtualnetwork2 = {
     name                = "vnet-2"
     location            = "centralindia"
-    resource_group_name = "rg-001"
+    resource_group_name = "rg-002"
     address_space       = ["10.1.0.0/16"]
     subnets = {
       snet-1 = {
