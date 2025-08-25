@@ -13,6 +13,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
+            workingDirectory: '$(Work_dir)'
             backendServiceArm: 'testingpool'
             backendAzureRmResourceGroupName: 'rg-001'
             backendAzureRmStorageAccountName: 'test32971'
@@ -25,6 +26,7 @@ stages:
             provider: 'azurerm'
             command: 'plan'
             commandOptions: '--var-file=${{ parameters.environment }}.terraform.tfvars'
+            workingDirectory: '$(Work_dir)'
             environmentServiceNameAzureRM: 'testingpool'
 
   - stage: manualvalidationandterraformapply
@@ -51,6 +53,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
+            workingDirectory: '$(Work_dir)'
             backendServiceArm: 'testingpool'
             backendAzureRmResourceGroupName: 'rg-001'
             backendAzureRmStorageAccountName: 'test32971'
@@ -63,4 +66,5 @@ stages:
             provider: 'azurerm'
             command: 'apply'
             commandOptions: '--var-file=${{ parameters.environment }}.terraform.tfvars'
+            workingDirectory: '$(Work_dir)'
             environmentServiceNameAzureRM: 'testingpool'

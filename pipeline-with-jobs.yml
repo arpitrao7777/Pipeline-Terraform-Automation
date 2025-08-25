@@ -2,16 +2,21 @@ pool: testpool
 
 trigger: none
 
+variables:
+  Work_dir: '$(System.DefaultWorkingDirectory)/infracode'
+
 jobs:
   - job: terraforminitandplan
     displayName: Terraform Init And Plan
     pool: testpool
     steps:
+
     - task: TerraformTask@5
       displayName: Terraform Init
       inputs:
         provider: 'azurerm'
         command: 'init'
+        workingDirectory: '$(Work_dir)'
         backendServiceArm: 'testingpool'
         backendAzureRmResourceGroupName: 'rg-001'
         backendAzureRmStorageAccountName: 'test32971'
@@ -23,6 +28,7 @@ jobs:
       inputs:
         provider: 'azurerm'
         command: 'plan'
+        workingDirectory: '$(Work_dir)'
         environmentServiceNameAzureRM: 'testingpool'
 
   - job: manualvalidation
@@ -46,6 +52,7 @@ jobs:
       inputs:
         provider: 'azurerm'
         command: 'init'
+        workingDirectory: '$(Work_dir)'
         backendServiceArm: 'testingpool'
         backendAzureRmResourceGroupName: 'rg-001'
         backendAzureRmStorageAccountName: 'test32971'
@@ -57,4 +64,5 @@ jobs:
       inputs:
         provider: 'azurerm'
         command: 'apply'
+        workingDirectory: '$(Work_dir)'
         environmentServiceNameAzureRM: 'testingpool'

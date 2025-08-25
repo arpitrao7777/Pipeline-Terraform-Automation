@@ -1,0 +1,12 @@
+trigger:
+- main
+
+pool: testpool
+
+variables:
+  Work_dir: '$(System.DefaultWorkingDirectory)/infracode'
+
+stages: 
+- template: templates-module-tf.yml
+  parameters:
+    environment: dev

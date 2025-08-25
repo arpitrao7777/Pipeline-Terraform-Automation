@@ -1,9 +1,0 @@
-trigger:
-- main
-
-pool: testpool
-
-stages: 
-- template: templates-tf.yml
-  parameters:
-    environment: prod
